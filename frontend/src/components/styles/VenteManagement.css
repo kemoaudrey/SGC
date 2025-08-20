@@ -1,0 +1,82 @@
+.vente-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 400px;
+    margin-top: 20px;
+  }
+  
+  .vente-form input, .vente-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  .vente-form button {
+    background-color: #2563EB;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .vente-form button:hover {
+    background-color: #1E3A8A;
+  }
+
+  .vente-table {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .vente-table .rdt_Table {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .vente-table .rdt_TableHead {
+    background-color: #f3f4f6;
+  }
+  
+  .vente-table .rdt_TableRow {
+    transition: background-color 0.2s;
+  }
+  
+  .vente-table .rdt_TableRow:hover {
+    background-color: #f9fafb;
+  }
+  
+  .input-edit {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .input-edit:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.4);
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .btn-save {
+    background-color: #22c55e;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: 0.3s;
+  }
+  
+  .btn-save:hover {
+    background-color: #16a34a;
+  }
+  

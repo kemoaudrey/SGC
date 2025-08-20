@@ -1,0 +1,54 @@
+.validation-container {
+  padding: 20px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-left: 10px;
+}
+
+.validation-table {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+  background-color: #f9fafb;
+}
+
+.status-badge {
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+/* .status-badge["En attente"] {
+  background-color: #fef3c7;
+  color: #d97706;
+} */
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}

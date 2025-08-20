@@ -1,0 +1,147 @@
+/* Styles du Header */
+.header {
+    height: 64px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 290px; /* Pour s'aligner avec la sidebar */
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Responsive: Ajuster la largeur du header si la sidebar est cachée */
+@media (max-width: 1024px) {
+    .header {
+        left: 0;
+        padding: 0 16px;
+    }
+}
+
+/* Barre de recherche */
+.search-container {
+    position: relative;
+    width: 280px; /* Légèrement plus large */
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 16px;
+    padding-left: 44px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    background-color: #f9fafb;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 4px rgba(37, 99, 235, 0.3);
+}
+
+/* Icône de recherche */
+.search-icon {
+    width: 20px;
+    height: 20px;
+    color: #9ca3af;
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+/* Conteneur pour aligner la notification et le profil utilisateur */
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: 16px; /* Espacement entre la notification et le profil */
+}
+
+/* Icône de notification */
+.notification-btn {
+    position: relative;
+    display: flex; /* Ajout pour un meilleur alignement */
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.notification-btn:hover {
+    background-color: #f3f4f6;
+}
+
+/* Badge de notification */
+.notification-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    height: 16px;
+    width: 16px;
+    background: #dc2626;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Profil utilisateur */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* cursor: pointer; */
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background 0.2s ease-in-out;
+}
+
+/* .user-profile:hover {
+    background-color: #f3f4f6;
+} */
+
+/* Avatar utilisateur */
+.user-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+/* .user-avatar:hover {
+    background: #d1d5db;
+} */
+
+/* Infos utilisateur */
+.user-info {
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.user-email {
+    color: #6b7280;
+    font-size: 12px;
+}

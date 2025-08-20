@@ -1,0 +1,54 @@
+/* === FORMULAIRE D'AJOUT DE PRODUIT === */
+.add-user-form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.add-user-form input,
+.add-user-form select {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.add-user-form input:focus,
+.add-user-form select:focus {
+    outline: none;
+    border-color: #2563EB;
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.4);
+}
+/* === INPUTS & SEARCH BAR === */
+.input {
+    width: 86%;
+    padding: 12px;
+    /* padding-left: 5px; */
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.input:focus {
+    border-color: #2563EB;
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.4);
+}
+
+/* === SELECT DROPDOWN === */
+select.input {
+    /* appearance: none; */
+    background-color: white;
+    cursor: pointer;
+}
+
+select.input:focus {
+    border-color: #2563EB;
+}
