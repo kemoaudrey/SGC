@@ -48,27 +48,14 @@ SGC is a comprehensive system that helps businesses manage their sales pipeline,
 ```
 ├── 📁 .git/ 🚫 (auto-hidden)
 ├── 📁 backend/
-│   ├── 📁 __pycache__/ 🚫 (auto-hidden)
-│   ├── 📁 instance/
-│   ├── 📁 migrations/
-│   │   ├── 📁 __pycache__/ 🚫 (auto-hidden)
-│   │   ├── 📁 versions/
-│   │   │   ├── 📁 __pycache__/ 🚫 (auto-hidden)
-│   │   │   └── 🐍 86b277b816e2_increase_password_length.py
-│   │   ├── 📖 README
-│   │   ├── ⚙️ alembic.ini
-│   │   ├── 🐍 env.py
-│   │   └── 📄 script.py.mako
-│   ├── 📁 venv/ 🚫 (auto-hidden)
 │   ├── 📄 Pipfile
+│   ├── 🔒 Pipfile.lock 🚫 (auto-hidden)
 │   ├── 🐍 app.py
 │   ├── 🐍 create_db.py
 │   ├── 🐍 database.py
 │   ├── 🐍 models.py
 │   └── 🐍 routes.py
 ├── 📁 frontend/
-│   ├── 📁 .git/ 🚫 (auto-hidden)
-│   ├── 📁 node_modules/ 🚫 (auto-hidden)
 │   ├── 📁 public/
 │   │   ├── 🖼️ favicon.ico
 │   │   ├── 🌐 index.html
@@ -139,11 +126,10 @@ SGC is a comprehensive system that helps businesses manage their sales pipeline,
 │   │   ├── 📄 index.js
 │   │   ├── 🖼️ logo.svg
 │   │   └── 📄 setupTests.js
-│   ├── 🚫 .gitignore
 │   ├── 📖 README.md
-│   ├── 📄 package-lock.json
+│   ├── 📝 SGC tree file.md
 │   └── 📄 package.json
-└── 🚫 .gitignore
+└── 📖 README.md
 ```
 
 ## Getting Started
