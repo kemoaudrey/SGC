@@ -273,9 +273,7 @@ def add_vente():
 
     new_vente = Vente(
         prospect_id=data["prospect_id"],
-        # prospect_name=data["prospect_name"],
-
-        product_name=data["product_name"],
+        product_id=data["product_id"],  # ✅ Correction ici
         amount=data["amount"],
         status="En cours",
         date_vente=datetime.utcnow()
@@ -284,7 +282,6 @@ def add_vente():
     db.session.add(new_vente)
     db.session.commit()
     return jsonify({"message": "Vente ajoutée avec succès!", "vente": new_vente.to_dict()}), 201
-
 
 # 🔹 Obtenir les ventes liées aux prospects du commercial
 @app.route("/api/getall/ventes", methods=["GET"])

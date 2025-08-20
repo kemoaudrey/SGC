@@ -1,8 +1,16 @@
 from database import db
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
-
+from sqlalchemy import event
 db = SQLAlchemy()
+
+PROSPECT_STATUS_CHOICES = ['Nouveau', 'En cours', 'Converti', 'Perdu']
+VENTE_STATUS_CHOICES = ['En cours', 'En attente', 'Approuvée', 'Rejetée', 'Finalisée']
+
+def validate_status(self, key, status):
+    if self.__class__ == Prospect and status not in PROSPECT_STATUS_CHOICES:
+        raise ValueError(f"Statut prospect invalide: {status}")
+    return status
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -52,6 +60,13 @@ class Prospect(db.Model):
             "created_at": self.created_at.strftime('%Y-%m-%d %H:%M'),
             "updated_at": self.updated_at.strftime('%Y-%m-%d %H:%M')
         }
+    
+@event.listens_for(Prospect.status, 'set')
+def validate_prospect_status(target, value, oldvalue, initiator):
+    if value not in PROSPECT_STATUS_CHOICES:
+        raise ValueError(f"Statut prospect invalide: {value}")
+    return value
+
 class Vente(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     prospect_id = db.Column(db.Integer, db.ForeignKey('prospect.id'), nullable=False)
@@ -80,6 +95,13 @@ class Vente(db.Model):
             "date_vente": self.date_vente.strftime('%Y-%m-%d %H:%M'),
             "created_at": self.created_at.strftime('%Y-%m-%d %H:%M')
         }
+    
+@event.listens_for(Vente.status, 'set')
+def validate_vente_status(target, value, oldvalue, initiator):
+    if value not in VENTE_STATUS_CHOICES:
+        raise ValueError(f"Statut vente invalide: {value}")
+    return value
+
 class ProductAssurance(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
