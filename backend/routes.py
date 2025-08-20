@@ -75,6 +75,7 @@ def create_user():
 # Get all users
 @app.route("/api/users", methods=["GET"])
 @jwt_required()
+@role_required(['admin'])  # ✅ Seuls les admins peuvent voir tous les utilisateurs
 def get_users():
     users = User.query.all()
     return jsonify([
@@ -317,7 +318,6 @@ def update_vente(vente_id):
     db.session.commit()
     return jsonify({"message": "Vente mise à jour!", "vente": vente.to_dict()})
 
-
 # 🔹 Supprimer une vente
 @app.route("/api/delete/vente/<int:vente_id>", methods=["DELETE"])
 @jwt_required()
@@ -334,6 +334,7 @@ def delete_vente(vente_id):
 
 @app.route("/api/statistics", methods=["GET"])
 @jwt_required()
+@role_required(['admin', 'manager'])  # ✅ Statistiques pour admin/manager uniquement
 def get_statistics():
     nb_users = User.query.count()
     nb_prospects = Prospect.query.count()
@@ -459,7 +460,6 @@ def manager_dashboard():
     
     return jsonify(stats)
 
-
 @app.route("/api/manager/approve-sale/<int:vente_id>", methods=["POST"])
 @jwt_required()
 @role_required(['manager', 'admin'])
@@ -486,3 +486,39 @@ def approve_sale(vente_id):
     
     db.session.commit()
     return jsonify({"message": f"Vente {action}ée avec succès"})
+
+# Gestion de l'équipe par le manager
+@app.route("/api/manager/team", methods=["GET"])
+@jwt_required()
+@role_required(['manager', 'admin'])
+def get_manager_team():
+    user_id = get_jwt_identity()
+    team_members = User.query.filter_by(manager_id=user_id, is_active=True).all()
+    
+    return jsonify([{
+        "id": member.id,
+        "nom": member.nom,
+        "email": member.email,
+        "contact": member.contact,
+        "created_at": member.created_at.strftime('%Y-%m-%d')
+    } for member in team_members])
+
+@app.route("/api/manager/assign-commercial", methods=["POST"])
+@jwt_required()
+@role_required(['manager', 'admin'])
+def assign_commercial():
+    data = request.json
+    user_id = get_jwt_identity()
+    
+    commercial = User.query.filter_by(
+        id=data["commercial_id"], 
+        role="commercial"
+    ).first()
+    
+    if not commercial:
+        return jsonify({"error": "Commercial non trouvé"}), 404
+    
+    commercial.manager_id = user_id
+    db.session.commit()
+    
+    return jsonify({"message": "Commercial assigné avec succès!"})
