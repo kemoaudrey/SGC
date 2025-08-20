@@ -4,12 +4,26 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 from werkzeug.security import  check_password_hash, generate_password_hash
 from app import app, db
 from datetime import datetime
+from functools import wraps
 import json
 from flask_jwt_extended import create_refresh_token, jwt_required, get_jwt_identity
 from datetime import timedelta
 auth_bp = Blueprint("auth", __name__)
 JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=3)  # Expiration du token en 2 heures
 
+def role_required(allowed_roles):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            user_id = get_jwt_identity()
+            user = User.query.get(user_id)
+            
+            if not user or user.role not in allowed_roles:
+                return jsonify({"error": "Accès refusé"}), 403
+            
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
 @app.route("/api/refresh", methods=["POST"])
 @jwt_required(refresh=True)
 def refresh_token():
@@ -37,7 +51,6 @@ def login():
         "refresh_token": create_refresh_token(identity=user.id),
         "role": user.role
                      })
-
 
 # Create a new user
 @app.route("/api/users", methods=["POST"])
@@ -424,4 +437,55 @@ def get_prospect_stats():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route("/api/manager/dashboard", methods=["GET"])
+@jwt_required()
+@role_required(['manager', 'admin'])
+def manager_dashboard():
+    user_id = get_jwt_identity()
+    
+    # Statistiques équipe
+    team_members = User.query.filter_by(manager_id=user_id).all()
+    team_ids = [m.id for m in team_members]
+    
+    stats = {
+        "team_size": len(team_members),
+        "total_prospects": Prospect.query.filter(Prospect.commercial_id.in_(team_ids)).count(),
+        "prospects_converted": Prospect.query.filter(
+            Prospect.commercial_id.in_(team_ids), 
+            Prospect.status == 'Converti'
+        ).count(),
+        "pending_approvals": Vente.query.join(Prospect).filter(
+            Prospect.commercial_id.in_(team_ids),
+            Vente.status == 'En attente'
+        ).count()
+    }
+    
+    return jsonify(stats)
 
+
+@app.route("/api/manager/approve-sale/<int:vente_id>", methods=["POST"])
+@jwt_required()
+@role_required(['manager', 'admin'])
+def approve_sale(vente_id):
+    user_id = get_jwt_identity()
+    
+    vente = Vente.query.join(Prospect).join(User).filter(
+        Vente.id == vente_id,
+        User.manager_id == user_id
+    ).first()
+    
+    if not vente:
+        return jsonify({"error": "Vente non trouvée ou non autorisée"}), 404
+    
+    data = request.json
+    action = data.get('action')  # 'approve' ou 'reject'
+    
+    if action == 'approve':
+        vente.status = 'Approuvée'
+        vente.approved_by = user_id
+        vente.approved_at = datetime.utcnow()
+    elif action == 'reject':
+        vente.status = 'Rejetée'
+    
+    db.session.commit()
+    return jsonify({"message": f"Vente {action}ée avec succès"})
